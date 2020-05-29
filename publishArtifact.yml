@@ -1,0 +1,18 @@
+trigger:
+- none
+
+pool:
+  name: Default
+steps:
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: artifact1'
+  inputs:
+    PathtoPublish: README.md
+    ArtifactName: artifact1
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host "##vso[build.addbuildtag]tag1" 
+      Write-Host "##vso[build.addbuildtag]tag2"
