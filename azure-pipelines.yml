@@ -1,0 +1,34 @@
+trigger:
+- none
+
+resources:
+  pipelines:
+  - pipeline: MyPipeline1
+    project: asmitta
+    source: publishArtifact
+    trigger:
+      branches:
+       exclude:
+         - master1
+  - pipeline: MyPipeline2
+    project: gykuma
+    source: asmitta-publishArtifact
+    trigger:
+      enabled: true
+      branches:
+        - master
+      tags:
+        - tag1
+        - tag2
+        - tag3
+
+stages:
+  - stage: stage1
+    jobs:
+    - job: download_specific_artifact
+      displayName: download specific artifact
+      pool:
+        name: Default
+      steps:
+        - download: MyPipeline1
+          artifact: artifact1
